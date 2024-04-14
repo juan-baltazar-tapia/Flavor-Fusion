@@ -1,29 +1,10 @@
-import React from "react";
-
+import React, { useState } from "react";
+import info from "../data.json";
 
 const EventPage = ({ data, setData }) => {
-  const events = [
-    "Music festivals",
-    "Food and wine festivals",
-    "Art exhibitions",
-    "Farmers markets",
-    "Sports tournaments",
-    "Cultural celebrations",
-    "Parades",
-    "Carnival or fairs",
-    "Theater performances",
-    "Comedy shows",
-    "Outdoor movie screenings",
-    "Holiday markets",
-    "Fireworks displays",
-    "Car shows",
-    "Craft fairs",
-    "Beer or wine tastings",
-    "Historical reenactments",
-    "Charity events or fundraisers",
-    "Fitness or wellness events",
-    "Technology or innovation expos",
-  ];
+  const [musicSelected, setMusicSelected] = useState(false);
+  const events = info.events;
+  const genres = info.genres;
 
   const handleSubmit = () => {
     console.log("DATA", data);
@@ -39,6 +20,28 @@ const EventPage = ({ data, setData }) => {
       setData({
         ...data,
         events: [...data.events, event],
+      });
+    }
+
+    if (event === "Music" && !data.events.includes(event)) {
+      setMusicSelected(true);
+    } else if (event === "Music" && data.events.includes(event)) {
+      setMusicSelected(false);
+    } else {
+      console.log("shouldnt happen");
+    }
+  };
+
+  const handleGenreClick = (genre: string) => {
+    if (data.genres.includes(genre)) {
+      setData({
+        ...data,
+        genres: data.genres.filter((currGenre: string) => currGenre != genre),
+      });
+    } else {
+      setData({
+        ...data,
+        genres: [...data.genres, genre],
       });
     }
   };
@@ -59,6 +62,24 @@ const EventPage = ({ data, setData }) => {
           </button>
         );
       })}
+      {musicSelected ? (
+        genres.map((genre, i) => {
+          const isSelected = data.genres.includes(genre);
+          return (
+            <button
+              key={i}
+              onClick={() => handleGenreClick(genre)}
+              style={{
+                backgroundColor: isSelected ? "lightblue" : "white",
+              }}
+            >
+              {genre}
+            </button>
+          );
+        })
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 };

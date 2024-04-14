@@ -1,0 +1,47 @@
+{
+  "events": [
+    "Food and wine festivals",
+    "Art exhibitions",
+    "Farmers markets",
+    "Sports tournaments",
+    "Cultural celebrations",
+    "Parades",
+    "Carnival or fairs",
+    "Theater performances",
+    "Comedy shows",
+    "Outdoor movie screenings",
+    "Holiday markets",
+    "Fireworks displays",
+    "Car shows",
+    "Craft fairs",
+    "Beer or wine tastings",
+    "Historical reenactments",
+    "Charity events or fundraisers",
+    "Fitness or wellness events",
+    "Technology or innovation expos",
+    "Music"
+  ],
+
+  "genres": [
+    "Pop",
+    "Rock",
+    "Hip Hop",
+    "R&B",
+    "Country",
+    "Jazz",
+    "Classical",
+    "Electronic",
+    "Indie",
+    "Folk",
+    "Blues",
+    "Reggae",
+    "Metal",
+    "Punk",
+    "Funk",
+    "Soul",
+    "Gospel",
+    "Latin",
+    "World",
+    "Dance"
+  ]
+}

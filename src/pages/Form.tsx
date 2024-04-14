@@ -24,6 +24,7 @@ const Form = () => {
     budget: "",
     food: [],
     events: [],
+    genres: []
   });
   const displayPage = () => {
     switch (page) {
