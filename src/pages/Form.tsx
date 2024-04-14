@@ -8,7 +8,7 @@ import Budget from "./Budget";
 import DayOverview from "./DayOverview";
 
 const Form = () => {
-  const [page, setPage] = useState(3);
+  const [page, setPage] = useState(4);
   const formTitles = [
     "Where are you located?",
     "What day are you planning for?",
@@ -37,7 +37,6 @@ const Form = () => {
         return <FoodPage data={data} setData={setData} />;
       case 4:
         return <EventPage data={data} setData={setData} />;
-
       default:
         alert("OH OH");
     }
