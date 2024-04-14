@@ -6,6 +6,7 @@ import EatOrLocalPage from "./EatOrLocalPage";
 import FoodPage from "./FoodPage";
 import EventPage from "./EventPage";
 import DayOverview from "./DayOverview";
+import DatePicker from "react-datepicker";
 
 const Form = () => {
   const [page, setPage] = useState(0);
@@ -31,13 +32,13 @@ const Form = () => {
       case 0:
         return <LocationPage data={data} setData={setData}/>;
       case 1:
-        return <DatePage />;
+        return <DatePage data={data} setData={setData}/>;
       case 2:
-        return <EatOrLocalPage />;
+        return <EatOrLocalPage data={data} setData={setData}/>;
       case 3:
-        return <FoodPage />;
+        return <FoodPage data={data} setData={setData}/>;
       case 4:
-        return <EventPage />;
+        return <EventPage data={data} setData={setData}/>;
       default:
         alert("OH OH");
     }

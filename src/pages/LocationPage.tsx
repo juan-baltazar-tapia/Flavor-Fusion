@@ -22,7 +22,6 @@ const LocationPage = ({
   data: LocationData;
   setData: React.Dispatch<React.SetStateAction<LocationData>>;
 }) => {
-  const [address, setAddress] = useState("");
 
   //   const [coordinates, setCoordinates] = useState({
   //     lat: null,
