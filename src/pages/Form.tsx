@@ -5,6 +5,7 @@ import DatePage from "./DatePage";
 import EatOrLocalPage from "./EatOrLocalPage";
 import FoodPage from "./FoodPage";
 import EventPage from "./EventPage";
+import Budget from "./Budget";
 import DayOverview from "./DayOverview";
 import DatePicker from "react-datepicker";
 
@@ -13,6 +14,7 @@ const Form = () => {
   const formTitles = [
     "Where are you located?",
     "What day are you planning for?",
+    "What is your budget?",
     "What would you like to do?",
     "Select your food preferences",
     "Choose events that interest you",
@@ -22,10 +24,11 @@ const Form = () => {
     city: '',
     state:'',
     date: '',
+    budget: '',
     goEat: false,
     localEvents: false,
     preferences: [],
-    events: {}
+    events: []
   })
   const displayPage = () => {
     switch (page) {
@@ -34,10 +37,12 @@ const Form = () => {
       case 1:
         return <DatePage data={data} setData={setData}/>;
       case 2:
+        return <Budget data={data} setData={setData}/>;
+      case 3:   
         return <EatOrLocalPage data={data} setData={setData}/>;
-      case 3:
-        return <FoodPage data={data} setData={setData}/>;
       case 4:
+        return <FoodPage data={data} setData={setData}/>;
+      case 5:
         return <EventPage data={data} setData={setData}/>;
       default:
         alert("OH OH");

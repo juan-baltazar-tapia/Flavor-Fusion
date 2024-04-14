@@ -2,24 +2,8 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-interface LocationData {
-  fullAddress: string;
-  city: string;
-  state: string;
-  date: string;
-  goEat: boolean;
-  localEvents: boolean;
-  preferences: any[]; // Update the type based on your specific requirements
-  events: any; // Update the type based on your specific requirements
-}
 
-const DatePage = ({
-  data,
-  setData,
-}: {
-  data: LocationData;
-  setData: React.Dispatch<React.SetStateAction<LocationData>>;
-}) => {
+const DatePage = ({data,setData}) => {
   const [startDate, setStartDate] = useState(new Date());
 
   const handleClick = () => {

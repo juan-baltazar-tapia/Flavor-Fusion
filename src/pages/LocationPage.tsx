@@ -4,24 +4,9 @@ import PlacesAutocomplete from "react-places-autocomplete";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 // Define the LocationData interface
-interface LocationData {
-  fullAddress: string;
-  city: string;
-  state: string;
-  date: string;
-  goEat: boolean;
-  localEvents: boolean;
-  preferences: any[]; // Update the type based on your specific requirements
-  events: any; // Update the type based on your specific requirements
-}
 
-const LocationPage = ({
-  data,
-  setData,
-}: {
-  data: LocationData;
-  setData: React.Dispatch<React.SetStateAction<LocationData>>;
-}) => {
+
+const LocationPage =({data,setData}) => {
 
   //   const [coordinates, setCoordinates] = useState({
   //     lat: null,
