@@ -2,48 +2,42 @@ import React from "react";
 import { useState } from "react";
 import LocationPage from "./LocationPage";
 import DatePage from "./DatePage";
-import EatOrLocalPage from "./EatOrLocalPage";
 import FoodPage from "./FoodPage";
 import EventPage from "./EventPage";
 import Budget from "./Budget";
 import DayOverview from "./DayOverview";
-import DatePicker from "react-datepicker";
 
 const Form = () => {
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(3);
   const formTitles = [
     "Where are you located?",
     "What day are you planning for?",
     "What is your budget?",
-    "What would you like to do?",
     "Select your food preferences",
     "Choose events that interest you",
   ];
-  const [data, setData] = useState({ 
-    fullAddress: '',
-    city: '',
-    state:'',
-    date: '',
-    budget: '',
-    goEat: false,
-    localEvents: false,
-    preferences: [],
-    events: []
-  })
+  const [data, setData] = useState({
+    fullAddress: "",
+    city: "",
+    state: "",
+    date: "",
+    budget: "",
+    food: [],
+    events: [],
+  });
   const displayPage = () => {
     switch (page) {
       case 0:
-        return <LocationPage data={data} setData={setData}/>;
+        return <LocationPage data={data} setData={setData} />;
       case 1:
-        return <DatePage data={data} setData={setData}/>;
+        return <DatePage data={data} setData={setData} />;
       case 2:
-        return <Budget data={data} setData={setData}/>;
-      case 3:   
-        return <EatOrLocalPage data={data} setData={setData}/>;
+        return <Budget data={data} setData={setData} />;
+      case 3:
+        return <FoodPage data={data} setData={setData} />;
       case 4:
-        return <FoodPage data={data} setData={setData}/>;
-      case 5:
-        return <EventPage data={data} setData={setData}/>;
+        return <EventPage data={data} setData={setData} />;
+
       default:
         alert("OH OH");
     }
@@ -56,9 +50,7 @@ const Form = () => {
         <div className="header">
           <h1>{formTitles[page]}</h1>
         </div>
-        <div className="body">
-            {displayPage()}
-        </div>
+        <div className="body">{displayPage()}</div>
         <div className="footer">
           <button
             disabled={page == 0}
