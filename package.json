@@ -14,7 +14,9 @@
     "react-datepicker": "^6.6.0",
     "react-dom": "^18.2.0",
     "react-places-autocomplete": "^7.3.0",
-    "react-router-dom": "^6.22.3"
+    "react-router-dom": "^6.22.3",
+    "yelp": "^1.0.2",
+    "yelp-fusion": "^3.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

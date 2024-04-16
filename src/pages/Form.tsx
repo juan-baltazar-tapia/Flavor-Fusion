@@ -8,7 +8,7 @@ import Budget from "./Budget";
 import DayOverview from "./DayOverview";
 
 const Form = () => {
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(5);
   const formTitles = [
     "Where are you located?",
     "What day are you planning for?",
@@ -17,10 +17,10 @@ const Form = () => {
     "Choose events that interest you",
   ];
   const [data, setData] = useState({
-    fullAddress: "",
+    fullAddress: "Willimantic CT",
     city: "",
     state: "",
-    date: "",
+    date: "01-14-200",
     budget: "",
     food: [],
     events: [],
@@ -39,7 +39,7 @@ const Form = () => {
       case 4:
         return <EventPage data={data} setData={setData} />;
       case 5:
-        return <DayOverview data={data} setData={setData} />;
+        return <DayOverview data={data} />;
     }
   };
 
