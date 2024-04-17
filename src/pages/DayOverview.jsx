@@ -8,7 +8,10 @@ const YELP_API_KEY = import.meta.env.VITE_YELP_API_KEY;
 //     "https://api.yelp.com/v3/businesses/search?term=food&location=350 5th Ave, New York, NY 10118"
 //   );
 const DayOverview = ({ data }) => {
-  let miles = 35;
+  const [restaurants, setRestaurants] = useState([]);
+  const [concerts, setConcerts] = useState([]);
+  const [miles, setMiles] = useState(15);
+
   useEffect(() => {
     const makeYelpRequest = async () => {
       const options = {
@@ -21,7 +24,8 @@ const DayOverview = ({ data }) => {
         .then((response) => response.json())
         .then((data) => {
           // Process the response data
-          console.log(data);
+          setRestaurants(data.businesses);
+          console.log(restaurants);
         })
         .catch((error) => {
           // Handle any errors
@@ -29,20 +33,28 @@ const DayOverview = ({ data }) => {
         });
     };
 
+    // makeYelpRequest();
+  }, []);
+
+  useEffect(() => {
     const makeSeatGeekRequest = async () => {
       fetch(makeSeatGeekURL())
         .then((response) => response.json())
         .then((data) => {
           //process this data
-          console.log("SEAK GEEK", data);
+          setConcerts(data.events);
+          if (concerts.length !== 0) {
+            setMiles((prevState) => prevState + 10);
+          }
+          console.log("SEAK GEEK", concerts);
+          console.log("MILES", miles);
         })
         .catch((error) => {
           console.log("Error:", error);
         });
     };
-    // makeYelpRequest();
     // makeSeatGeekRequest();
-  }, []);
+  }, [miles]);
   const makeYelpURL = () => {
     const base =
       "https://corsproxy.io/?https://api.yelp.com/v3/businesses/search?term=food&";
@@ -93,8 +105,31 @@ const DayOverview = ({ data }) => {
     console.log(fullURL);
     return fullURL;
   };
+  // 3 food 2 events
 
-  return <div></div>;
+  return (
+    <div>
+      <h2>Heres an overview of the info</h2>
+      <p>{data.location}</p>
+      <p>{data.lat}</p>
+      <p>{data.lon}</p>
+      <p>{data.budget}</p>
+      <p>
+        <ul>
+          {data.food.map((item) => {
+            return <li>{item}</li>;
+          })}
+        </ul>
+      </p>
+      <p>
+        <ul>
+          {data.genres.map((item) => {
+            return <li>{item}</li>;
+          })}
+        </ul>
+      </p>
+    </div>
+  );
 };
 
 export default DayOverview;

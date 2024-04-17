@@ -10,46 +10,42 @@ import DayOverview from "./DayOverview";
 const Form = () => {
   const [page, setPage] = useState(5);
   const formTitles = [
-    "Where are you located?",
-    "What day are you planning for?",
+    "Which location are you exploring?",
     "What is your budget?",
     "Select your food preferences",
-    "Choose events that interest you",
+    "Which genres interest you?",
   ];
   const [data, setData] = useState({
     location: "Willimantic CT",
-    lat: '41.715839',
-    lon: '-72.221840',
+    lat: "41.715839",
+    lon: "-72.221840",
     date: "01-14-200",
     budget: "$$",
-    food: ["mexican",'italian'],
-    events: ['food','music'],
-    genres: ['electronic','rock'],
+    food: ["mexican", "italian"],
+    events: ["food", "music"],
+    genres: ["electronic", "rock"],
   });
   const displayPage = () => {
     switch (page) {
       case 0:
         return <LocationPage data={data} setData={setData} />;
       case 1:
-        return <DatePage data={data} setData={setData} />;
-      case 2:
         return <Budget data={data} setData={setData} />;
-      case 3:
+      case 2:
         return <FoodPage data={data} setData={setData} />;
-      case 4:
-        return <EventPage data={data} setData={setData} />;
-      case 5:
+      case 3:
         return <DayOverview data={data} />;
+      default:
+        return;
     }
   };
 
   const allFieldsFull = () => {
     if (
       data.location !== "" &&
-      data.date !== "" &&
       data.budget !== "" &&
       data.food.length > 0 &&
-      data.events.length > 0
+      data.genres.length > 0
     ) {
       return true;
     } else {
@@ -66,7 +62,7 @@ const Form = () => {
         </div>
         <div className="body">{displayPage()}</div>
         <div className="footer">
-          {page !== 5 && (
+          {page !== 3 && (
             <button
               disabled={page == 0}
               onClick={() => {
@@ -76,20 +72,20 @@ const Form = () => {
               Previous
             </button>
           )}
-          {page !== 5 && (
+          {page !== 3 && (
             <button
               onClick={() => {
-                if (page === 4 && allFieldsFull()) {
+                if (page === 2 && allFieldsFull()) {
                   alert("From Submitted");
                   setPage((currPage) => currPage + 1);
-                } else if (page === 4 && !allFieldsFull()) {
+                } else if (page === 2 && !allFieldsFull()) {
                   alert("Please fill out all inputs");
                 } else {
                   setPage((currPage) => currPage + 1);
                 }
               }}
             >
-              {page === 4 ? "Submit" : "Next"}
+              {page === 2 ? "Submit" : "Next"}
             </button>
           )}
         </div>
