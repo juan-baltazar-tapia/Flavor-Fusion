@@ -25,7 +25,7 @@ const LocationPage =({data,setData}) => {
       ...data,
       city: currCity,
       state: currState,
-      fullAddress: results[0].formatted_address,
+      location: results[0].formatted_address,
     });
 
     // const coords = await getLatLng(results[0]);
@@ -40,9 +40,9 @@ const LocationPage =({data,setData}) => {
     <div>
       <button onClick={handleSubmit}>Check Data</button>
       <PlacesAutocomplete
-        value={data.fullAddress}
+        value={data.location}
         onChange={(value) => setData( {
-            ...data, fullAddress: value
+            ...data, location: value
         }) }
         onSelect={handleSelect}
       >

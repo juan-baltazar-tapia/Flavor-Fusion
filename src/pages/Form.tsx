@@ -17,14 +17,14 @@ const Form = () => {
     "Choose events that interest you",
   ];
   const [data, setData] = useState({
-    fullAddress: "Willimantic CT",
-    city: "",
-    state: "",
+    location: "Willimantic CT",
+    lat: '41.715839',
+    lon: '-72.221840',
     date: "01-14-200",
-    budget: "",
-    food: [],
-    events: [],
-    genres: [],
+    budget: "$$",
+    food: ["mexican",'italian'],
+    events: ['food','music'],
+    genres: ['electronic','rock'],
   });
   const displayPage = () => {
     switch (page) {
@@ -45,7 +45,7 @@ const Form = () => {
 
   const allFieldsFull = () => {
     if (
-      data.fullAddress !== "" &&
+      data.location !== "" &&
       data.date !== "" &&
       data.budget !== "" &&
       data.food.length > 0 &&
