@@ -5,13 +5,11 @@ import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 // Define the LocationData interface
 
-
-const LocationPage =({data,setData}) => {
-
-  //   const [coordinates, setCoordinates] = useState({
-  //     lat: null,
-  //     long: null,
-  //   });
+const LocationPage = ({ data, setData }) => {
+  const [coordinates, setCoordinates] = useState({
+    lat: null,
+    long: null,
+  });
 
   const handleSelect = async (value: string) => {
     const results = await geocodeByAddress(value);
@@ -20,16 +18,16 @@ const LocationPage =({data,setData}) => {
     const currCity = fullAddressComponents[0].long_name;
     const currState =
       fullAddressComponents[fullAddressComponents.length - 2].long_name;
+    const coords = await getLatLng(results[0]);
 
     setData({
       ...data,
       city: currCity,
       state: currState,
       location: results[0].formatted_address,
+      lat: coords.lat,
+      lon: coords.lng,
     });
-
-    // const coords = await getLatLng(results[0]);
-    // setCoordinates(coords);
   };
 
   const handleSubmit = () => {
@@ -41,9 +39,12 @@ const LocationPage =({data,setData}) => {
       <button onClick={handleSubmit}>Check Data</button>
       <PlacesAutocomplete
         value={data.location}
-        onChange={(value) => setData( {
-            ...data, location: value
-        }) }
+        onChange={(value) =>
+          setData({
+            ...data,
+            location: value,
+          })
+        }
         onSelect={handleSelect}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (

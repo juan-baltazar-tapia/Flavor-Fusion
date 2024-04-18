@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import info from "../data.json";
 
-const EventPage = ({ data, setData }) => {
+const GenrePage = ({ data, setData }) => {
   const [musicSelected, setMusicSelected] = useState(false);
   const events = info.events;
   const genres = info.genres;
@@ -48,7 +48,7 @@ const EventPage = ({ data, setData }) => {
   return (
     <div className="container">
       <button onClick={handleSubmit}>Check Data</button>
-      {events.map((event, i) => {
+      {/* {events.map((event, i) => {
         const isSelected = data.events.includes(event);
         return (
           <button
@@ -61,27 +61,23 @@ const EventPage = ({ data, setData }) => {
             {event}
           </button>
         );
+      })} */}
+      {genres.map((genre, i) => {
+        const isSelected = data.genres.includes(genre);
+        return (
+          <button
+            key={i}
+            onClick={() => handleGenreClick(genre)}
+            style={{
+              backgroundColor: isSelected ? "lightblue" : "white",
+            }}
+          >
+            {genre}
+          </button>
+        );
       })}
-      {musicSelected ? (
-        genres.map((genre, i) => {
-          const isSelected = data.genres.includes(genre);
-          return (
-            <button
-              key={i}
-              onClick={() => handleGenreClick(genre)}
-              style={{
-                backgroundColor: isSelected ? "lightblue" : "white",
-              }}
-            >
-              {genre}
-            </button>
-          );
-        })
-      ) : (
-        <div></div>
-      )}
     </div>
   );
 };
 
-export default EventPage;
+export default GenrePage;

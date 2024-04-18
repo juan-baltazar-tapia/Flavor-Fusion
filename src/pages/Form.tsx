@@ -3,12 +3,13 @@ import { useState } from "react";
 import LocationPage from "./LocationPage";
 import DatePage from "./DatePage";
 import FoodPage from "./FoodPage";
-import EventPage from "./EventPage";
+import GenrePage from "./GenrePage";
 import Budget from "./Budget";
 import DayOverview from "./DayOverview";
+import Test from "./test.jsx";
 
 const Form = () => {
-  const [page, setPage] = useState(5);
+  const [page, setPage] = useState(0);
   const formTitles = [
     "Which location are you exploring?",
     "What is your budget?",
@@ -16,14 +17,13 @@ const Form = () => {
     "Which genres interest you?",
   ];
   const [data, setData] = useState({
-    location: "Willimantic CT",
-    lat: "41.715839",
-    lon: "-72.221840",
-    date: "01-14-200",
-    budget: "$$",
-    food: ["mexican", "italian"],
-    events: ["food", "music"],
-    genres: ["electronic", "rock"],
+    location: "",
+    lat: "",
+    lon: "",
+    budget: "",
+    food: [],
+    events: [],
+    genres: [],
   });
   const displayPage = () => {
     switch (page) {
@@ -34,7 +34,9 @@ const Form = () => {
       case 2:
         return <FoodPage data={data} setData={setData} />;
       case 3:
-        return <DayOverview data={data} />;
+        return <GenrePage data={data} setData={setData} />;
+      case 4:
+        return <DayOverview data={data} setData={setData} />;
       default:
         return;
     }
@@ -62,7 +64,7 @@ const Form = () => {
         </div>
         <div className="body">{displayPage()}</div>
         <div className="footer">
-          {page !== 3 && (
+          {page !== 4 && (
             <button
               disabled={page == 0}
               onClick={() => {
@@ -72,20 +74,20 @@ const Form = () => {
               Previous
             </button>
           )}
-          {page !== 3 && (
+          {page !== 4 && (
             <button
               onClick={() => {
-                if (page === 2 && allFieldsFull()) {
+                if (page === 3 && allFieldsFull()) {
                   alert("From Submitted");
                   setPage((currPage) => currPage + 1);
-                } else if (page === 2 && !allFieldsFull()) {
+                } else if (page === 3 && !allFieldsFull()) {
                   alert("Please fill out all inputs");
                 } else {
                   setPage((currPage) => currPage + 1);
                 }
               }}
             >
-              {page === 2 ? "Submit" : "Next"}
+              {page === 3 ? "Submit" : "Next"}
             </button>
           )}
         </div>

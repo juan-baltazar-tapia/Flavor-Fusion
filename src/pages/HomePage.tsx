@@ -6,10 +6,11 @@ const HomePage = () => {
     <div className="parent-container">
       <h2>
         Welcome to Flavor Fusion, an application that recommends food options
-        and music venues based on your preferences!
+        and music venues based on your preferences, budget, and location!
       </h2>
       <Link to="/form">
         <button>Get Started</button>
+
       </Link>
     </div>
   );
