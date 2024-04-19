@@ -31,7 +31,6 @@
     "Classical",
     "Electronic",
     "Indie",
-    "Folk",
     "Blues",
     "Reggae",
     "Metal",
@@ -39,8 +38,20 @@
     "Funk",
     "Soul",
     "Gospel",
-    "Latin",
-    "World",
-    "Dance"
+    "Latin"
+  ],
+  "culturalFoods": [
+    "Mexican",
+    "Japanese",
+    "Italian",
+    "Chinese",
+    "Indian",
+    "Thai",
+
+    "Korean",
+    "Vietnamese",
+    "Jamaican",
+
+    "Indonesian"
   ]
 }

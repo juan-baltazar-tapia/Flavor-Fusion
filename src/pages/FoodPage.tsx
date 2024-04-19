@@ -1,28 +1,8 @@
 import React, { useState } from "react";
+import info from "../data.json";
 
 const FoodPage = ({ data, setData }) => {
-  const culturalFoods = [
-    "Mexican",
-    "Japanese",
-    "Italian",
-    "Chinese",
-    "Indian",
-    "Thai",
-    "Greek",
-    "French",
-    "Spanish",
-    "Lebanese",
-    "Korean",
-    "Vietnamese",
-    "Moroccan",
-    "Turkish",
-    "Ethiopian",
-    "Peruvian",
-    "Jamaican",
-    "German",
-    "Russian",
-    "Indonesian",
-  ];
+  const culturalFoods = info.culturalFoods;
 
   const handleClick = (item: string) => {
     if (data.food.includes(item)) {
@@ -43,23 +23,25 @@ const FoodPage = ({ data, setData }) => {
   };
 
   return (
-    <div className="container">
-      <button onClick={handleSubmit}>Check Data</button>
-
-      {culturalFoods.map((item, i) => {
-        const isSelected = data.food.includes(item);
-        return (
-          <button
-            key={i}
-            onClick={() => handleClick(item)}
-            style={{
-              backgroundColor: isSelected ? "lightblue" : "white",
-            }}
-          >
-            {item}
-          </button>
-        );
-      })}
+    <div className="container mx-auto">
+      <div className="grid grid-cols-5 gap-4">
+        {culturalFoods.map((item, i) => {
+          const isSelected = data.food.includes(item);
+          return (
+            <button
+              key={i}
+              onClick={() => handleClick(item)}
+              className={`px-6 py-3 rounded-md text-white font-medium ${
+                isSelected
+                  ? "bg-indigo-600 shadow-lg"
+                  : "bg-gray-400 hover:bg-indigo-600"
+              }`}
+            >
+              {item}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 };

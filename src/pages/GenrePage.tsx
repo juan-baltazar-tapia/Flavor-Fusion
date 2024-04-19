@@ -6,10 +6,6 @@ const GenrePage = ({ data, setData }) => {
   const events = info.events;
   const genres = info.genres;
 
-  const handleSubmit = () => {
-    console.log("DATA", data);
-  };
-
   const handleClick = (event: string) => {
     if (data.events.includes(event)) {
       setData({
@@ -46,36 +42,25 @@ const GenrePage = ({ data, setData }) => {
     }
   };
   return (
-    <div className="container">
-      <button onClick={handleSubmit}>Check Data</button>
-      {/* {events.map((event, i) => {
-        const isSelected = data.events.includes(event);
-        return (
-          <button
-            key={i}
-            onClick={() => handleClick(event)}
-            style={{
-              backgroundColor: isSelected ? "lightblue" : "white",
-            }}
-          >
-            {event}
-          </button>
-        );
-      })} */}
-      {genres.map((genre, i) => {
-        const isSelected = data.genres.includes(genre);
-        return (
-          <button
-            key={i}
-            onClick={() => handleGenreClick(genre)}
-            style={{
-              backgroundColor: isSelected ? "lightblue" : "white",
-            }}
-          >
-            {genre}
-          </button>
-        );
-      })}
+    <div className="container mx-auto">
+      <div className="grid grid-cols-4 gap-4">
+        {genres.map((genre, i) => {
+          const isSelected = data.genres.includes(genre);
+          return (
+            <button
+              key={i}
+              onClick={() => handleGenreClick(genre)}
+              className={`px-6 py-3 rounded-md text-white font-medium ${
+                isSelected
+                  ? "bg-indigo-600 shadow-lg"
+                  : "bg-gray-400 hover:bg-indigo-600"
+              }`}
+            >
+              {genre}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 };

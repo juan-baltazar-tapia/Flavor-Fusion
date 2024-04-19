@@ -1,30 +1,35 @@
-import React, { useState } from 'react';
-import './Button.css';
+import React, { useState } from "react";
 
-const Budget = ({data, setData}) => {
-
-  const handleSubmit = () => {
-    console.log("data", data)
-  }
-
+const Budget = ({ data, setData }) => {
   return (
-    <div className="button-group">
-        <button onClick={handleSubmit}> See Data</button>
+    <div className="flex justify-center space-x-4">
       <button
-        className={data.budget === '$' ? 'selected' : ''}
-        onClick={() => setData({...data, budget: "$"})}
+        className={`px-6 py-3 rounded-md text-white font-medium ${
+          data.budget === "$"
+            ? "bg-green-700 shadow-lg"
+            : "bg-gray-400 hover:bg-green-700"
+        }`}
+        onClick={() => setData({ ...data, budget: "$" })}
       >
         $
       </button>
       <button
-        className={data.budget === '$$'  ? 'selected' : ''}
-        onClick={() => setData({...data, budget: "$$"})}
+        className={`px-6 py-3 rounded-md text-white font-medium ${
+          data.budget === "$$"
+            ? "bg-green-700 shadow-lg"
+            : "bg-gray-400 hover:bg-green-700"
+        }`}
+        onClick={() => setData({ ...data, budget: "$$" })}
       >
         $$
       </button>
       <button
-        className={data.budget === '$$$'  ? 'selected' : ''}
-        onClick={() => setData({...data, budget: "$$$"})}
+        className={`px-6 py-3 rounded-md text-white font-medium ${
+          data.budget === "$$$"
+            ? "bg-green-700 shadow-lg"
+            : "bg-gray-400 hover:bg-green-700"
+        }`}
+        onClick={() => setData({ ...data, budget: "$$$" })}
       >
         $$$
       </button>
