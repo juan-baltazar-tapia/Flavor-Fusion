@@ -117,7 +117,7 @@ const Form = () => {
                       setPage((currPage) => currPage + 1);
                     }
                   }}
-                  className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
+                  className="absolute top-2 right-2 text-gray-600 hover:text-gray-800 mb-4"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -139,11 +139,30 @@ const Form = () => {
                     ? "Form Submitted"
                     : "Please fill out all inputs"}
                 </h2>
-                <p className="text-gray-600">
+                <p className="text-gray-600 mb-4">
                   {allFieldsFull()
                     ? "Thank you for submitting the form!"
                     : "Please ensure that all fields are filled out before submitting."}
                 </p>
+                <div className="flex justify-end space-x-4">
+                  <button
+                    onClick={() => setShowPopup(false)}
+                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowPopup(false);
+                      if (allFieldsFull()) {
+                        setPage((currPage) => currPage + 1);
+                      }
+                    }}
+                    className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                  >
+                    {allFieldsFull() ? "Continue" : "OK"}
+                  </button>
+                </div>
               </div>
             </div>
           )}
