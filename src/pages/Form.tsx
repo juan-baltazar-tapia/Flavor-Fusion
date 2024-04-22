@@ -35,7 +35,7 @@ const Form = () => {
       case 3:
         return <GenrePage data={data} setData={setData} />;
       case 4:
-        return <DayOverview data={data} />;
+        return <DayOverview userData={data} />;
       default:
         return;
     }
