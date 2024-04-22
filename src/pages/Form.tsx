@@ -1,31 +1,27 @@
-import React from "react";
 import { useState } from "react";
 import LocationPage from "./LocationPage";
-import DatePage from "./DatePage";
 import FoodPage from "./FoodPage";
 import GenrePage from "./GenrePage";
 import Budget from "./Budget";
 import DayOverview from "./DayOverview";
-import Test from "./test.jsx";
 
 const Form = () => {
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(4);
   const [showPopup, setShowPopup] = useState(false);
   const formTitles = [
     "Which location are you exploring?",
-    "What is your budget?",
+    "Select your budget?",
     "Select your food preferences",
-    "Which genres interest you?",
+    "Select some music genres",
   ];
 
   const [data, setData] = useState({
-    location: "",
-    lat: "",
-    lon: "",
-    budget: "",
-    food: [],
-    events: [],
-    genres: [],
+    location: "Willimantic, Windham, CT, USA",
+    lat: "41.7106543",
+    lon: "-72.2081338",
+    budget: "$$",
+    food: ["Mexican", "Japanese"],
+    genres: ["Jazz","Classical"],
   });
 
   const displayPage = () => {
@@ -39,7 +35,7 @@ const Form = () => {
       case 3:
         return <GenrePage data={data} setData={setData} />;
       case 4:
-        return <DayOverview data={data} setData={setData} />;
+        return <DayOverview data={data} />;
       default:
         return;
     }

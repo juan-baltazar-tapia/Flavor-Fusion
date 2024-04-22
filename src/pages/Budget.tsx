@@ -6,8 +6,8 @@ const Budget = ({ data, setData }) => {
       <button
         className={`px-6 py-3 rounded-md text-white font-medium ${
           data.budget === "$"
-            ? "bg-green-700 shadow-lg"
-            : "bg-gray-400 hover:bg-green-700"
+            ? "bg-indigo-700 shadow-lg"
+            : "bg-gray-400 hover:bg-indigo-700"
         }`}
         onClick={() => setData({ ...data, budget: "$" })}
       >
@@ -16,8 +16,8 @@ const Budget = ({ data, setData }) => {
       <button
         className={`px-6 py-3 rounded-md text-white font-medium ${
           data.budget === "$$"
-            ? "bg-green-700 shadow-lg"
-            : "bg-gray-400 hover:bg-green-700"
+            ? "bg-indigo-700 shadow-lg"
+            : "bg-gray-400 hover:bg-indigo-700"
         }`}
         onClick={() => setData({ ...data, budget: "$$" })}
       >
@@ -26,8 +26,8 @@ const Budget = ({ data, setData }) => {
       <button
         className={`px-6 py-3 rounded-md text-white font-medium ${
           data.budget === "$$$"
-            ? "bg-green-700 shadow-lg"
-            : "bg-gray-400 hover:bg-green-700"
+            ? "bg-indigo-700 shadow-lg"
+            : "bg-gray-400 hover:bg-indigo-700"
         }`}
         onClick={() => setData({ ...data, budget: "$$$" })}
       >
