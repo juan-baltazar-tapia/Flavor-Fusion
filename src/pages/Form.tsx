@@ -6,7 +6,7 @@ import Budget from "./Budget";
 import DayOverview from "./DayOverview";
 
 const Form = () => {
-  const [page, setPage] = useState(4);
+  const [page, setPage] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
   const formTitles = [
     "Which location are you exploring?",

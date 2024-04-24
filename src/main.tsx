@@ -4,6 +4,8 @@ import HomePage from "./pages/HomePage";
 import NavBar from "./components/NavBar";
 import AboutPage from "./pages/AboutPage";
 import Form from "./pages/Form";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 
@@ -15,6 +17,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/" element={<HomePage />}></Route>
           <Route path="/about" element={<AboutPage />}></Route>
           <Route path="/form" element={<Form />}></Route>
+          <Route path="/register" element={<RegisterPage />}></Route>
+          <Route path="/login" element={<LoginPage />}></Route>
+
         </Route>
       </Routes>
     </BrowserRouter>
