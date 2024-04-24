@@ -1,7 +1,8 @@
-# Flavor Fusion
+# Flavor Fusion 
 
-An application for restaurant and concert reccomendations based on preferences and location. Get a list of top rated, restaurants, and nearby music events. 
-Account creation to save restaurants will be implemented in the future
+An web application for restaurant and music event reccomendations based on preferences, budget, and location. Get a list of top rated, restaurants, and nearby music events, save them into your profile for future use! 
+
+* Work in Progress...
 
 
 ## Setup
