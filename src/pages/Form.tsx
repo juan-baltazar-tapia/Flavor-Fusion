@@ -16,12 +16,12 @@ const Form = () => {
   ];
 
   const [data, setData] = useState({
-    location: "Willimantic, Windham, CT, USA",
-    lat: "41.7106543",
-    lon: "-72.2081338",
+    location: "Willimantic CT, 06226",
+    lat: "41.715230",
+    lon: "-72.218680",
     budget: "$$",
-    food: ["Mexican", "Japanese"],
-    genres: ["Jazz","Classical"],
+    food: ["Mexican", "Korean"],
+    genres: ["Rock"],
   });
 
   const displayPage = () => {

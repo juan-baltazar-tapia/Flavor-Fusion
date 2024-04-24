@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
-  GoogleMap,
-  Marker,
-  useJsApiLoader,
-  DirectionsService,
-  DirectionsRenderer,
-  
-} from "@react-google-maps/api";
+  APIProvider,
+  Map,
+  useMap,
+  useMapsLibrary,
+} from "@vis.gl/react-google-maps";
 const SEAK_GEEK_API_KEY = import.meta.env.VITE_SEAK_GEEK_API_KEY;
 const YELP_API_KEY = import.meta.env.VITE_YELP_API_KEY;
 const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
@@ -19,16 +17,11 @@ const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
 const DayOverview = ({ userData }) => {
   const [restaurants, setRestaurants] = useState([]);
   const [concerts, setConcerts] = useState([]);
-  const [directions, setDirections] = useState(null);
   const [userLocation, setUserLocation] = useState({
     lat: parseFloat(userData.lat),
-    lng: parseFloat(userData.lon)
+    lng: parseFloat(userData.lon),
   });
-  const [currLocation, setCurrLocation] = useState(null);
-
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: `${GOOGLE_API_KEY}`,
-  });
+  const [currLocation, setCurrLocation] = useState("");
 
   useEffect(() => {
     const makeRequest = async () => {
@@ -66,28 +59,16 @@ const DayOverview = ({ userData }) => {
     //handleUserLocation();
   }, []);
 
-  // const handleUserLocation = () => {
-  //   setUserLocation({
-  //     lat: parseFloat(userData.lat),
-  //     lng: parseFloat(userData.lon),
-  //   });
-  // };
-
-  const handleCurrLocation = (coordinates, type) => {
+  const handleCurrLocation = (item, type) => {
+    let location = "";
     if (type === "restaurant") {
-      setCurrLocation({
-        lat: coordinates.latitude,
-        lng: coordinates.longitude,
-      });
+      location = `${item.name}${item.location?.address1}${item.location.city}`;
+      console.log("restaurant location", location);
     } else {
-      setCurrLocation({ lat: coordinates.lat, lng: coordinates.lon });
+      location = `${item.venue.address}${item.venue.extended_address}`;
+      console.log("concert location", location);
     }
-  };
-
-  const handleDirections = (response) => {
-    if (response !== null) {
-      setDirections(response);
-    }
+    setCurrLocation(location);
   };
 
   const selectTopFiveRestuarants = (arr) => {
@@ -163,6 +144,63 @@ const DayOverview = ({ userData }) => {
     return fullURL;
   };
 
+  function Directions() {
+    const map = useMap();
+    const routesLibrary = useMapsLibrary("routes");
+    const [directionsService, setDirectionsService] =
+      useState<google.maps.DirectionsService>();
+    const [directionsRenderer, setDirectionsRenderer] =
+      useState<google.maps.DirectionsRenderer>();
+    const [routes, setRoutes] = useState<google.maps.DirectionsRoute[]>([]);
+    const [routeIndex, setRouteIndex] = useState(0);
+    const selected = routes[routeIndex];
+    const leg = selected?.legs[0];
+
+    useEffect(() => {
+      if (!routesLibrary || !map) {
+        return;
+      }
+      setDirectionsService(new routesLibrary.DirectionsService());
+      setDirectionsRenderer(new routesLibrary.DirectionsRenderer({ map }));
+    }, [routesLibrary, map, currLocation]);
+
+    useEffect(() => {
+      if (!directionsRenderer || !directionsService) {
+        return;
+      }
+      
+
+      directionsService
+        .route({
+          origin: userData.location,
+          destination: currLocation,
+          travelMode: google.maps.TravelMode.DRIVING,
+          provideRouteAlternatives: true,
+        })
+        .then((response) => {
+          console.log("RESPONSE", response);
+          directionsRenderer.setDirections(response);
+          setRoutes(response.routes);
+        });
+    }, [directionsService, directionsRenderer, currLocation]);
+
+    return (
+      <>
+        {leg && (
+          <div className="bg-white shadow-md rounded-lg p-4 mb-4">
+            <h2 className="text-xl font-bold mb-2">{selected.summary}</h2>
+            <p className="text-gray-600">
+              {leg.start_address.split(",")[0]} to{" "}
+              {leg.end_address.split(",")[0]}
+            </p>
+            <p className="text-gray-600 mt-2">Distance: {leg.distance?.text}</p>
+            <p className="text-gray-600">Duration: {leg.duration?.text}</p>
+          </div>
+        )}
+      </>
+    );
+  }
+
   return (
     <div>
       <h2>Recommended restaurants</h2>
@@ -170,7 +208,7 @@ const DayOverview = ({ userData }) => {
         restaurants.map((item) => {
           return (
             <li
-              onClick={() => handleCurrLocation(item.coordinates, "restaurant")}
+              onClick={() => handleCurrLocation(item, "restaurant")}
               key={item.id}
             >
               {item.name}
@@ -188,7 +226,7 @@ const DayOverview = ({ userData }) => {
         concerts.map((item) => {
           return (
             <li
-              onClick={() => handleCurrLocation(item.venue.location, "concert")}
+              onClick={() => handleCurrLocation(item, "concert")}
               key={item.id}
             >
               {item.title}
@@ -198,45 +236,17 @@ const DayOverview = ({ userData }) => {
       ) : (
         <div>Loading...</div>
       )}
-     <div>
-
-    {isLoaded && (
-      <GoogleMap
-        mapContainerStyle={{ width: '100%', height: '400px' }}
-        center={userLocation || { lat: 0, lng: 0 }}
-        zoom={12}
-      >
-        {userLocation && <Marker position={userLocation} />}
-        {/* {concerts.map((concert) => (
-          <Marker
-            key={concert.id}
-            position={{ lat: concert.venue.location.lat, lng: concert.venue.location.lon }}
-            
-            
-          />
-        ))} */}
-        {userLocation && currLocation && (
-          <DirectionsService
-            options={{
-              destination: currLocation,
-              origin: userLocation,
-              travelMode: "DRIVING",
-            }}
-            callback={handleDirections}
-          />
-        )}
-        {directions && <DirectionsRenderer directions={directions} />}
-      </GoogleMap>
-    )}
-    {/* {selectedConcert && (
-      <div>
-        <h3>Selected Concert:</h3>
-        <p>Name: {selectedConcert.name}</p>
-        <p>Latitude: {selectedConcert.latitude}</p>
-        <p>Longitude: {selectedConcert.longitude}</p>
+      <div style={{ height: "100vh" }}>
+        <APIProvider apiKey={GOOGLE_API_KEY}>
+          <Map
+            defaultCenter={userLocation}
+            defaultZoom={14}
+            fullscreenControl={false}
+          >
+            <Directions />
+          </Map>
+        </APIProvider>
       </div>
-    )} */}
-  </div>
     </div>
   );
 };
