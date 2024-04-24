@@ -58,7 +58,7 @@ const Form = () => {
     <div className="form">
       <div className="progress-bar bg-gray-200 h-2 mb-8">
         <div
-          className={`bg-indigo-600 h-full transition-all duration-500 ease-in-out`}
+          className={`bg-indigo-600 h-full transition-all duration-500 ease-in-out ${page === 4 ? "hidden" : null}`}
           style={{ width: `${((page + 1) / formTitles.length) * 100}%` }}
         ></div>
       </div>
