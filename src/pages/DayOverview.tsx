@@ -266,53 +266,7 @@ const DayOverview = ({ userData }) => {
           </APIProvider>
         </div>
       </div>
-{/* 
-      {selectedLocation && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
-          <div className="bg-white rounded-lg shadow-lg p-6 z-10">
-            <h2 className="text-2xl font-bold mb-4">
-              {selectedLocation.type === 'restaurant' ? selectedLocation.name : selectedLocation.title}
-            </h2>
-            {selectedLocation.type === 'restaurant' && (
-              <>
-                <p className="text-gray-500 mb-1">Price: {selectedLocation.price}</p>
-                <p className="text-gray-500 mb-1">
-                  {selectedLocation.rating.toFixed(1)} ({selectedLocation.review_count} reviews)
-                </p>
-                <p className={`text-sm ${selectedLocation.is_closed ? 'text-red-500' : 'text-green-500'}`}>
-                  {selectedLocation.is_closed ? 'Closed' : 'Open'}
-                </p>
-              </>
-            )}
-            {selectedLocation.type === 'concert' && (
-              <>
-                <p className="text-gray-500 mb-2">Price: ${selectedLocation.stats.average_price}</p>
-                <button
-                  onClick={() => window.open(`${selectedLocation.url}`)}
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded"
-                >
-                  Buy Tickets
-                </button>
-              </>
-            )}
-            <button
-              onClick={() => setSelectedLocation(null)}
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      )} */}
+
     </div>
   );
 };
