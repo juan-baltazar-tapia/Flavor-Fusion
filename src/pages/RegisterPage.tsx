@@ -1,13 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitted")
+    console.log(username, password)
+    axios.post('http://localhost:3001/register', {username, password})
+    .then((result) => console.log(result))
+    .catch((err) => console.log(err))
   }
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -47,7 +52,7 @@ const RegisterPage = () => {
           <div className="flex items-center justify-between">
             <button
               className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="button"
+              type="submit"
             >
               Register
             </button>
