@@ -5,6 +5,8 @@ import {
   useMap,
   useMapsLibrary,
 } from "@vis.gl/react-google-maps";
+import axios from "axios";
+
 const SEAK_GEEK_API_KEY = import.meta.env.VITE_SEAK_GEEK_API_KEY;
 const YELP_API_KEY = import.meta.env.VITE_YELP_API_KEY;
 const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
@@ -14,7 +16,7 @@ const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
 //   encodeURIComponent(
 //     "https://api.yelp.com/v3/businesses/search?term=food&location=350 5th Ave, New York, NY 10118"
 //   );
-const DayOverview = ({ userData }) => {
+const DayOverview = ({ userData, isLoggedIn }) => {
   const [restaurants, setRestaurants] = useState([]);
   const [concerts, setConcerts] = useState([]);
   const [userLocation, setUserLocation] = useState({
@@ -69,6 +71,35 @@ const DayOverview = ({ userData }) => {
       console.log("concert location", location);
     }
     setCurrLocation(location);
+  };
+
+  const handleSaveRestaurant = (restaurant) => {
+    const token = localStorage.getItem("token");
+    const restaurantData = {
+      restaurantId: restaurant.id,
+      name: restaurant.name,
+      price: restaurant.price,
+      rating: restaurant.rating,
+      reviewCount: restaurant.review_count,
+      address: restaurant.location.address1,
+      city: restaurant.location.city,
+      state: restaurant.location.state,
+    };
+
+    axios
+      .post("http://localhost:3001/saveRestaurant", restaurantData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log("Restaurant saved successfully", response.data);
+        // Optionally, you can show a success message to the user
+      })
+      .catch((error) => {
+        console.error("Error saving restaurant", error);
+        // Optionally, you can show an error message to the user
+      });
   };
 
   const selectTopFiveRestuarants = (arr) => {
@@ -199,7 +230,7 @@ const DayOverview = ({ userData }) => {
       </>
     );
   }
-
+  //name, price, raing, review_count, location_address_1, city, state
   return (
     <div className="flex">
       <div className="w-1/2 p-8">
@@ -209,7 +240,7 @@ const DayOverview = ({ userData }) => {
             {restaurants.map((item) => (
               <li
                 key={item.id}
-                onClick={() => handleCurrLocation(item, 'restaurant')}
+                onClick={() => handleCurrLocation(item, "restaurant")}
                 className="bg-white rounded-lg shadow-md p-4 cursor-pointer transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
               >
                 <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
@@ -217,9 +248,21 @@ const DayOverview = ({ userData }) => {
                 <p className="text-gray-500 mb-1">
                   {item.rating.toFixed(1)} ({item.review_count} reviews)
                 </p>
-                <p className={`text-sm ${item.is_closed ? 'text-red-500' : 'text-green-500'}`}>
-                  {item.is_closed ? 'Closed' : 'Open'}
+                <p
+                  className={`text-sm ${
+                    item.is_closed ? "text-red-500" : "text-green-500"
+                  }`}
+                >
+                  {item.is_closed ? "Closed" : "Open"}
                 </p>
+                {isLoggedIn && (
+                  <button
+                    onClick={() => handleSaveRestaurant(item)}
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded mt-2"
+                  >
+                    Save Restaurant
+                  </button>
+                )}
               </li>
             ))}
           </ul>
@@ -230,17 +273,21 @@ const DayOverview = ({ userData }) => {
           </div>
         )}
 
-        <h2 className="text-2xl font-bold mt-8 mb-4">Recommended Music Events</h2>
+        <h2 className="text-2xl font-bold mt-8 mb-4">
+          Recommended Music Events
+        </h2>
         {concerts ? (
           <ul className="space-y-4">
             {concerts.map((item) => (
               <li
                 key={item.id}
-                onClick={() => handleCurrLocation(item, 'concert')}
+                onClick={() => handleCurrLocation(item, "concert")}
                 className="bg-white rounded-lg shadow-md p-4 cursor-pointer transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
               >
                 <p className="text-lg font-semibold mb-2">{item.title}</p>
-                <p className="text-gray-500 mb-2">Price: ${item.stats.average_price}</p>
+                <p className="text-gray-500 mb-2">
+                  Price: ${item.stats.average_price}
+                </p>
                 <button
                   onClick={() => window.open(`${item.url}`)}
                   className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded"
@@ -258,15 +305,18 @@ const DayOverview = ({ userData }) => {
       </div>
 
       <div className="w-1/2">
-        <div style={{ height: '100vh' }}>
+        <div style={{ height: "100vh" }}>
           <APIProvider apiKey={GOOGLE_API_KEY}>
-            <Map defaultCenter={userLocation} defaultZoom={14} fullscreenControl={false}>
+            <Map
+              defaultCenter={userLocation}
+              defaultZoom={14}
+              fullscreenControl={false}
+            >
               <Directions />
             </Map>
           </APIProvider>
         </div>
       </div>
-
     </div>
   );
 };

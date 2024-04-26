@@ -30,7 +30,6 @@ const LocationPage = ({ data, setData }) => {
     });
   };
 
-
   return (
     <div className=" bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
       <div className="relative py-3 sm:max-w-xl sm:mx-auto">
@@ -82,12 +81,13 @@ const LocationPage = ({ data, setData }) => {
                   </div>
                   <div className="mt-4">
                     {loading && <div>Loading...</div>}
-                    {suggestions.map((suggestion) => {
+                    {suggestions.map((suggestion, index) => {
                       const className = suggestion.active
                         ? "bg-indigo-50 text-indigo-900"
                         : "bg-white text-gray-900";
                       return (
                         <div
+                          key={index}
                           {...getSuggestionItemProps(suggestion, {
                             className: `${className} px-4 py-2 cursor-pointer`,
                           })}
@@ -100,7 +100,6 @@ const LocationPage = ({ data, setData }) => {
                 </div>
               )}
             </PlacesAutocomplete>
-        
           </div>
         </div>
       </div>

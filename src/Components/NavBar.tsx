@@ -1,9 +1,10 @@
 import { Outlet, Link } from "react-router-dom";
 import { useState } from "react";
 
-const NavBar = () => {
+const NavBar = ({ isLoggedIn }) => {
   const [homeSelected, setHomeSelected] = useState(true);
   const [aboutSelected, setAboutSelected] = useState(false);
+  console.log("IS LOGED IN", isLoggedIn)
 
   const toggleHomeClass = () => {
     setHomeSelected(!homeSelected);
@@ -60,22 +61,41 @@ const NavBar = () => {
               >
                 About
               </Link>
-              <Link
-                to="/register"
-                onClick={() => {
-                  if (!homeSelected) {
-                    toggleHomeClass();
-                    toggleAboutClass();
-                  }
-                }}
-                className={`${
-                  homeSelected
-                    ? " border-indigo-500 text-gray-900"
-                    : " border-none text-gray-400"
-                }    hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
-              >
-                Register
-              </Link>
+              {isLoggedIn ? (
+                <Link
+                  to="/profile"
+                  onClick={() => {
+                    if (!homeSelected) {
+                      toggleHomeClass();
+                      toggleAboutClass();
+                    }
+                  }}
+                  className={`${
+                    homeSelected
+                      ? " border-indigo-500 text-gray-900"
+                      : " border-none text-gray-400"
+                  }    hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+                >
+                  Profile
+                </Link>
+              ) : (
+                <Link
+                  to="/register"
+                  onClick={() => {
+                    if (!homeSelected) {
+                      toggleHomeClass();
+                      toggleAboutClass();
+                    }
+                  }}
+                  className={`${
+                    homeSelected
+                      ? " border-indigo-500 text-gray-900"
+                      : " border-none text-gray-400"
+                  }    hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+                >
+                  Register
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -133,7 +153,6 @@ const NavBar = () => {
             >
               Register
             </Link>
-            
           </div>
         </div>
       </nav>

@@ -5,7 +5,7 @@ import GenrePage from "./GenrePage";
 import Budget from "./Budget";
 import DayOverview from "./DayOverview";
 
-const Form = () => {
+const Form = ({isLoggedIn}) => {
   const [page, setPage] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
   const formTitles = [
@@ -24,6 +24,7 @@ const Form = () => {
     genres: ["Rock"],
   });
 
+
   const displayPage = () => {
     switch (page) {
       case 0:
@@ -35,7 +36,7 @@ const Form = () => {
       case 3:
         return <GenrePage data={data} setData={setData} />;
       case 4:
-        return <DayOverview userData={data} />;
+        return <DayOverview userData={data} isLoggedIn={isLoggedIn} />;
       default:
         return;
     }
@@ -58,7 +59,9 @@ const Form = () => {
     <div className="form">
       <div className="progress-bar bg-gray-200 h-2 mb-8">
         <div
-          className={`bg-indigo-600 h-full transition-all duration-500 ease-in-out ${page === 4 ? "hidden" : null}`}
+          className={`bg-indigo-600 h-full transition-all duration-500 ease-in-out ${
+            page === 4 ? "hidden" : null
+          }`}
           style={{ width: `${((page + 1) / formTitles.length) * 100}%` }}
         ></div>
       </div>

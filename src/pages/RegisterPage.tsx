@@ -9,11 +9,19 @@ const RegisterPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, password)
-    axios.post('http://localhost:3001/register', {username, password})
-    .then((result) => console.log(result))
-    .catch((err) => console.log(err))
-  }
+    //console.log(username, password)
+    axios
+      .post("http://localhost:3001/register", { username, password })
+      .then((result) => {
+        console.log(result);
+        if (result.data === "Sucess") {
+          window.location.href = "/";
+        }
+      })
+      .catch((err) => console.log(err));
+    window.location.href = "/login";
+  };
+  
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
