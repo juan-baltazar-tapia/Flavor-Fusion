@@ -2,9 +2,8 @@ import { Outlet, Link } from "react-router-dom";
 import { useState } from "react";
 
 const NavBar = ({ isLoggedIn }) => {
-  const [homeSelected, setHomeSelected] = useState(true);
+  const [homeSelected, setHomeSelected] = useState(false);
   const [aboutSelected, setAboutSelected] = useState(false);
-  console.log("IS LOGED IN", isLoggedIn)
 
   const toggleHomeClass = () => {
     setHomeSelected(!homeSelected);
@@ -31,21 +30,22 @@ const NavBar = ({ isLoggedIn }) => {
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               <Link
                 to="/"
-                onClick={() => {
-                  if (!homeSelected) {
-                    toggleHomeClass();
-                    toggleAboutClass();
-                  }
-                }}
+                // onClick={() => {
+                //   if (!homeSelected) {
+                //     toggleHomeClass();
+                //     toggleAboutClass();
+                //   }
+                // }}
+                
                 className={`${
                   homeSelected
                     ? " border-indigo-500 text-gray-900"
-                    : " border-none text-gray-400"
+                    : " border-none text-gray-900"
                 }    hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
                 Home
               </Link>
-              <Link
+              {/* <Link
                 to="/about"
                 onClick={() => {
                   if (!aboutSelected) {
@@ -60,40 +60,56 @@ const NavBar = ({ isLoggedIn }) => {
                 }   hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
                 About
+              </Link> */}
+              <Link
+                to="/recommendations"
+                // onClick={() => {
+                //   if (!homeSelected) {
+                //     toggleHomeClass();
+                //     toggleAboutClass();
+                //   }
+                // }}
+                className={`${
+                  homeSelected
+                    ? " border-indigo-500 text-gray-900"
+                    : " border-none text-gray-900"
+                }    hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+              >
+                Recommendations
               </Link>
               {isLoggedIn ? (
                 <Link
                   to="/profile"
-                  onClick={() => {
-                    if (!homeSelected) {
-                      toggleHomeClass();
-                      toggleAboutClass();
-                    }
-                  }}
+                  // onClick={() => {
+                  //   if (!homeSelected) {
+                  //     toggleHomeClass();
+                  //     toggleAboutClass();
+                  //   }
+                  // }}
                   className={`${
                     homeSelected
                       ? " border-indigo-500 text-gray-900"
-                      : " border-none text-gray-400"
+                      : " border-none text-gray-900"
                   }    hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
                 >
                   Profile
                 </Link>
               ) : (
                 <Link
-                  to="/register"
-                  onClick={() => {
-                    if (!homeSelected) {
-                      toggleHomeClass();
-                      toggleAboutClass();
-                    }
-                  }}
+                  to="/login"
+                  // onClick={() => {
+                  //   if (!homeSelected) {
+                  //     toggleHomeClass();
+                  //     toggleAboutClass();
+                  //   }
+                  // }}
                   className={`${
                     homeSelected
                       ? " border-indigo-500 text-gray-900"
                       : " border-none text-gray-400"
                   }    hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
                 >
-                  Register
+                  Login
                 </Link>
               )}
             </div>

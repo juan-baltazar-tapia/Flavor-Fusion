@@ -1,28 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+import { supabase } from "../client";
 
-const LoginPage = ({setIsLoggedIn}) => {
+const LoginPage = ({ setIsLoggedIn, setUserId }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    axios
-      .post("http://localhost:3001/login", { username, password })
-      .then((result) => {
-        console.log(result);
-        if (result.data === "Success") {
-          // Set the isLoggedIn state to true in the parent component
-          setIsLoggedIn(true);
-          // Optionally, you can store the user's token or session data in local storage or cookies
-          localStorage.setItem("token", result.data.token);
-        }
-      })
-      .catch((err) => console.log(err));
-    // window.location.href = '/login'
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+
+    if (error) {
+      alert(error);
+    } else {
+      setIsLoggedIn(true);
+      setUserId(data.user.id);
+      alert("Logged In")
+    }
   };
 
   return (
@@ -33,16 +33,16 @@ const LoginPage = ({setIsLoggedIn}) => {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="username"
+              htmlFor="email"
             >
-              Username
+              Email
             </label>
             <input
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
               type="text"
-              id="username"
-              placeholder="Enter your username"
-              onChange={(e) => setUsername(e.target.value)}
+              id="email"
+              placeholder="Enter your Email"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="mb-6">

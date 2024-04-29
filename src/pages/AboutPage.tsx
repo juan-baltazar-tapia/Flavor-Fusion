@@ -1,8 +1,12 @@
 import React from 'react'
 
-const AboutPage = () => {
+const AboutPage = ({isLoggedIn}) => {
+  console.log("is logged in", isLoggedIn)
   return (
-    <div>AboutPage</div>
+    <div>
+      <h1>About page</h1>
+      <p>Is Logged in {isLoggedIn}</p>
+    </div>
   )
 }
 

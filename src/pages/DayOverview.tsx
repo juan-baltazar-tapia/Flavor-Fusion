@@ -5,7 +5,7 @@ import {
   useMap,
   useMapsLibrary,
 } from "@vis.gl/react-google-maps";
-import axios from "axios";
+import { supabase } from "../client";
 
 const SEAK_GEEK_API_KEY = import.meta.env.VITE_SEAK_GEEK_API_KEY;
 const YELP_API_KEY = import.meta.env.VITE_YELP_API_KEY;
@@ -16,7 +16,7 @@ const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
 //   encodeURIComponent(
 //     "https://api.yelp.com/v3/businesses/search?term=food&location=350 5th Ave, New York, NY 10118"
 //   );
-const DayOverview = ({ userData, isLoggedIn }) => {
+const DayOverview = ({ userData, isLoggedIn, userId }) => {
   const [restaurants, setRestaurants] = useState([]);
   const [concerts, setConcerts] = useState([]);
   const [userLocation, setUserLocation] = useState({
@@ -24,6 +24,9 @@ const DayOverview = ({ userData, isLoggedIn }) => {
     lng: parseFloat(userData.lon),
   });
   const [currLocation, setCurrLocation] = useState("");
+  console.log("data from day overview", userData);
+  console.log("isloggedin", isLoggedIn);
+  console.log("userid", userId);
 
   useEffect(() => {
     const makeRequest = async () => {
@@ -35,7 +38,7 @@ const DayOverview = ({ userData, isLoggedIn }) => {
       const response = await fetch(makeYelpURL(), options);
       const data = await response.json();
       if (data.businesses.length > 5) {
-        setRestaurants(selectTopFiveRestuarants(data.businesses));
+        setRestaurants(selectTopFourRestuarants(data.businesses));
       } else {
         setRestaurants(data.businesses);
       }
@@ -73,40 +76,32 @@ const DayOverview = ({ userData, isLoggedIn }) => {
     setCurrLocation(location);
   };
 
-  const handleSaveRestaurant = (restaurant) => {
-    const token = localStorage.getItem("token");
-    const restaurantData = {
-      restaurantId: restaurant.id,
-      name: restaurant.name,
-      price: restaurant.price,
-      rating: restaurant.rating,
-      reviewCount: restaurant.review_count,
-      address: restaurant.location.address1,
-      city: restaurant.location.city,
-      state: restaurant.location.state,
-    };
+  const handleSaveRestaurant = async (restuarant_id: string, name: string, price: string, rating: number, review_count: number, location: string ) => {
 
-    axios
-      .post("http://localhost:3001/saveRestaurant", restaurantData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    const { data, error } = await supabase
+      .from("restaurants")
+      .insert({ 
+        user_id: userId, 
+        restaurant_id: restuarant_id ,
+        name: name,
+        price: price,
+        rating: rating,
+        review_count:  review_count,
+        location:location
       })
-      .then((response) => {
-        console.log("Restaurant saved successfully", response.data);
-        // Optionally, you can show a success message to the user
-      })
-      .catch((error) => {
-        console.error("Error saving restaurant", error);
-        // Optionally, you can show an error message to the user
-      });
+      .select();
+    if (error) {
+      console.log(error);
+    } else {
+      alert("Restaurant added")
+    }
   };
 
-  const selectTopFiveRestuarants = (arr) => {
+  const selectTopFourRestuarants = (arr) => {
     const selectedRestaurants = [];
     const randomIndices = new Set();
 
-    while (selectedRestaurants.length < 5) {
+    while (selectedRestaurants.length < 4) {
       const randomIndex = Math.floor(Math.random() * arr.length);
 
       if (!randomIndices.has(randomIndex)) {
@@ -175,62 +170,67 @@ const DayOverview = ({ userData, isLoggedIn }) => {
     return fullURL;
   };
 
-  function Directions() {
-    const map = useMap();
-    const routesLibrary = useMapsLibrary("routes");
-    const [directionsService, setDirectionsService] =
-      useState<google.maps.DirectionsService>();
-    const [directionsRenderer, setDirectionsRenderer] =
-      useState<google.maps.DirectionsRenderer>();
-    const [routes, setRoutes] = useState<google.maps.DirectionsRoute[]>([]);
-    const [routeIndex, setRouteIndex] = useState(0);
-    const selected = routes[routeIndex];
-    const leg = selected?.legs[0];
+  // function Directions() {
+  //   const map = useMap();
+  //   const routesLibrary = useMapsLibrary("routes");
+  //   const [directionsService, setDirectionsService] =
+  //     useState<google.maps.DirectionsService>();
+  //   const [directionsRenderer, setDirectionsRenderer] =
+  //     useState<google.maps.DirectionsRenderer>();
+  //   const [routes, setRoutes] = useState<google.maps.DirectionsRoute[]>([]);
+  //   const [routeIndex, setRouteIndex] = useState(0);
+  //   const selected = routes[routeIndex];
+  //   const leg = selected?.legs[0];
 
-    useEffect(() => {
-      if (!routesLibrary || !map) {
-        return;
-      }
-      setDirectionsService(new routesLibrary.DirectionsService());
-      setDirectionsRenderer(new routesLibrary.DirectionsRenderer({ map }));
-    }, [routesLibrary, map, currLocation]);
+  //   useEffect(() => {
+  //     if (!routesLibrary || !map) {
+  //       return;
+  //     }
+  //     setDirectionsService(new routesLibrary.DirectionsService());
+  //     setDirectionsRenderer(new routesLibrary.DirectionsRenderer({ map }));
+  //   }, [routesLibrary, map, currLocation]);
 
-    useEffect(() => {
-      if (!directionsRenderer || !directionsService) {
-        return;
-      }
+  //   useEffect(() => {
+  //     if (!directionsRenderer || !directionsService) {
+  //       return;
+  //     }
 
-      directionsService
-        .route({
-          origin: userData.location,
-          destination: currLocation,
-          travelMode: google.maps.TravelMode.DRIVING,
-          provideRouteAlternatives: true,
-        })
-        .then((response) => {
-          console.log("RESPONSE", response);
-          directionsRenderer.setDirections(response);
-          setRoutes(response.routes);
-        });
-    }, [directionsService, directionsRenderer, currLocation]);
+  //     directionsService
+  //       .route({
+  //         origin: userData.location,
+  //         destination: currLocation,
+  //         travelMode: google.maps.TravelMode.DRIVING,
+  //         provideRouteAlternatives: true,
+  //       })
+  //       .then((response) => {
+  //         console.log("RESPONSE", response);
+  //         directionsRenderer.setDirections(response);
+  //         setRoutes(response.routes);
+  //       });
+  //   }, [directionsService, directionsRenderer, currLocation]);
 
-    return (
-      <>
-        {leg && (
-          <div className="bg-white shadow-md rounded-lg p-4 mb-4">
-            <h2 className="text-xl font-bold mb-2">{selected.summary}</h2>
-            <p className="text-gray-600">
-              {leg.start_address.split(",")[0]} to{" "}
-              {leg.end_address.split(",")[0]}
-            </p>
-            <p className="text-gray-600 mt-2">Distance: {leg.distance?.text}</p>
-            <p className="text-gray-600">Duration: {leg.duration?.text}</p>
-          </div>
-        )}
-      </>
-    );
-  }
+  //   return (
+  //     <>
+  //       {leg && (
+  //         <div className="bg-white shadow-md rounded-lg p-4 mb-4">
+  //           <h2 className="text-xl font-bold mb-2">{selected.summary}</h2>
+  //           <p className="text-gray-600">
+  //             {leg.start_address.split(",")[0]} to{" "}
+  //             {leg.end_address.split(",")[0]}
+  //           </p>
+  //           <p className="text-gray-600 mt-2">Distance: {leg.distance?.text}</p>
+  //           <p className="text-gray-600">Duration: {leg.duration?.text}</p>
+  //         </div>
+  //       )}
+  //     </>
+  //   );
+  // }
   //name, price, raing, review_count, location_address_1, city, state
+
+  const makeAddress = (address: string, city: string, state: string) => {
+    return  address + " " + city + " " + state
+
+  }
   return (
     <div className="flex">
       <div className="w-1/2 p-8">
@@ -238,32 +238,33 @@ const DayOverview = ({ userData, isLoggedIn }) => {
         {restaurants ? (
           <ul className="space-y-4">
             {restaurants.map((item) => (
-              <li
-                key={item.id}
-                onClick={() => handleCurrLocation(item, "restaurant")}
-                className="bg-white rounded-lg shadow-md p-4 cursor-pointer transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
-              >
-                <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
-                <p className="text-gray-500 mb-1">Price: {item.price}</p>
-                <p className="text-gray-500 mb-1">
-                  {item.rating.toFixed(1)} ({item.review_count} reviews)
-                </p>
-                <p
-                  className={`text-sm ${
-                    item.is_closed ? "text-red-500" : "text-green-500"
-                  }`}
+              <div key={item.id}>
+                <li
+                  onClick={() => handleCurrLocation(item, "restaurant")}
+                  className="bg-white rounded-lg shadow-md p-4 cursor-pointer transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
                 >
-                  {item.is_closed ? "Closed" : "Open"}
-                </p>
+                  <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
+                  <p className="text-gray-500 mb-1">Price: {item.price}</p>
+                  <p className="text-gray-500 mb-1">
+                    {item.rating.toFixed(1)} ({item.review_count} reviews)
+                  </p>
+                  <p
+                    className={`text-sm ${
+                      item.is_closed ? "text-red-500" : "text-green-500"
+                    }`}
+                  >
+                    {item.is_closed ? "Closed" : "Open"}
+                  </p>
+                </li>
                 {isLoggedIn && (
                   <button
-                    onClick={() => handleSaveRestaurant(item)}
+                    onClick={() => handleSaveRestaurant(item.id, item.name,item.price, item.rating.toFixed(1),item.review_count, makeAddress(item.location.address1, item.location.city, item.location.state))}
                     className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded mt-2"
                   >
                     Save Restaurant
                   </button>
                 )}
-              </li>
+              </div>
             ))}
           </ul>
         ) : (
@@ -312,7 +313,7 @@ const DayOverview = ({ userData, isLoggedIn }) => {
               defaultZoom={14}
               fullscreenControl={false}
             >
-              <Directions />
+              {/* <Directions /> */}
             </Map>
           </APIProvider>
         </div>

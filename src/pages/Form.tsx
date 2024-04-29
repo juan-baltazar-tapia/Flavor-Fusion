@@ -5,7 +5,7 @@ import GenrePage from "./GenrePage";
 import Budget from "./Budget";
 import DayOverview from "./DayOverview";
 
-const Form = ({isLoggedIn}) => {
+const Form = ({isLoggedIn, data, setData}) => {
   const [page, setPage] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
   const formTitles = [
@@ -15,14 +15,6 @@ const Form = ({isLoggedIn}) => {
     "Select some music genres",
   ];
 
-  const [data, setData] = useState({
-    location: "Willimantic CT, 06226",
-    lat: "41.715230",
-    lon: "-72.218680",
-    budget: "$$",
-    food: ["Mexican", "Korean"],
-    genres: ["Rock"],
-  });
 
 
   const displayPage = () => {
@@ -93,6 +85,7 @@ const Form = ({isLoggedIn}) => {
               onClick={() => {
                 if (page === 3 && allFieldsFull()) {
                   setShowPopup(true);
+      
                 } else if (page === 3 && !allFieldsFull()) {
                   setShowPopup(true);
                 } else {
@@ -114,6 +107,7 @@ const Form = ({isLoggedIn}) => {
                     setShowPopup(false);
                     if (allFieldsFull()) {
                       setPage((currPage) => currPage + 1);
+              
                     }
                   }}
                   className="absolute top-2 right-2 text-gray-600 hover:text-gray-800 mb-4"
@@ -154,7 +148,7 @@ const Form = ({isLoggedIn}) => {
                     onClick={() => {
                       setShowPopup(false);
                       if (allFieldsFull()) {
-                        setPage((currPage) => currPage + 1);
+                        window.location.href='/recommendations'
                       }
                     }}
                     className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"

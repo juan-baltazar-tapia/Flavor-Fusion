@@ -1,25 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+import { supabase } from "../client";
 
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    //console.log(username, password)
-    axios
-      .post("http://localhost:3001/register", { username, password })
-      .then((result) => {
-        console.log(result);
-        if (result.data === "Sucess") {
-          window.location.href = "/";
+    
+    try {
+      const {data, error} = await supabase.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            username: username
+          }
         }
       })
-      .catch((err) => console.log(err));
-    window.location.href = "/login";
+      alert("Check email for authentication link")
+      
+    } catch (error) {
+      alert(error)
+    }
+    
   };
   
   return (
@@ -40,6 +47,21 @@ const RegisterPage = () => {
               id="username"
               placeholder="Enter your username"
               onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="email"
+            >
+              Email
+            </label>
+            <input
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+              type="text"
+              id="email"
+              placeholder="Enter your password"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="mb-6">
