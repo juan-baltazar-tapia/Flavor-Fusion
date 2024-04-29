@@ -25,7 +25,7 @@ const LoginPage = ({ setIsLoggedIn, setUserId }) => {
     } else {
       setIsLoggedIn(true);
       setUserId(data.user.id);
-      navigate('/');
+      navigate('/profile');
     }
   };
 

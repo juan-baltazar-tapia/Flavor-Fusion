@@ -12,12 +12,12 @@ import DayOverview from "./DayOverview";
 
 const App = () => {
   const [data, setData] = useState({
-    location: "Willimantic CT, 06226",
-    lat: "41.715230",
-    lon: "-72.218680",
-    budget: "$$",
-    food: ["Mexican", "Korean"],
-    genres: ["Rock"],
+    location: "",
+    lat: "",
+    lon: "",
+    budget: "",
+    food: [],
+    genres: [],
   });
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -32,7 +32,7 @@ const App = () => {
         <Route path="/form" element={<Form isLoggedIn={isLoggedIn} data={data} setData={setData}/>}></Route>
         <Route path="/register" element={<RegisterPage />}></Route>
         <Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setUserId={setUserId}/>}></Route>
-        <Route path="/profile" element={<ProfilePage userId={userId}/>}></Route>
+        <Route path="/profile" element={<ProfilePage userId={userId} setIsLoggedIn={setIsLoggedIn} setUserId={setUserId} setData={setData}/>}></Route>
         <Route path="/recommendations" element={<DayOverview userData={data} isLoggedIn={isLoggedIn} userId={userId}/>}></Route>
       </Route>
     </Routes>
