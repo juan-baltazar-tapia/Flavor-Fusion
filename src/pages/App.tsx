@@ -31,7 +31,7 @@ const App = () => {
         <Route path="/about" element={<AboutPage isLoggedIn={isLoggedIn} />}></Route>
         <Route path="/form" element={<Form isLoggedIn={isLoggedIn} data={data} setData={setData}/>}></Route>
         <Route path="/register" element={<RegisterPage />}></Route>
-        <Route path="/login" element={<LoginPage setIsLoggedIn={setIsLoggedIn} setUserId={setUserId}/>}></Route>
+        <Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setUserId={setUserId}/>}></Route>
         <Route path="/profile" element={<ProfilePage userId={userId}/>}></Route>
         <Route path="/recommendations" element={<DayOverview userData={data} isLoggedIn={isLoggedIn} userId={userId}/>}></Route>
       </Route>

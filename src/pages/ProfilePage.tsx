@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "../client";
+import { useNavigate } from "react-router-dom";
 
 const ProfilePage = ({ userId }) => {
   const [restaurants, setRestaurants] = useState([]);
   const [render, setRender] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +43,7 @@ const ProfilePage = ({ userId }) => {
       console.log(error)
     } else {
       alert("Succesfully signed out")
-      window.location.href = '/'
+      navigate('/')
     }
   };
 

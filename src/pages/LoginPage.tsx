@@ -2,11 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { supabase } from "../client";
+import { useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = ({ setIsLoggedIn, setUserId }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +25,7 @@ const LoginPage = ({ setIsLoggedIn, setUserId }) => {
     } else {
       setIsLoggedIn(true);
       setUserId(data.user.id);
-      alert("Logged In")
+      navigate('/');
     }
   };
 

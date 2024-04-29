@@ -4,18 +4,19 @@ import FoodPage from "./FoodPage";
 import GenrePage from "./GenrePage";
 import Budget from "./Budget";
 import DayOverview from "./DayOverview";
+import { useNavigate } from "react-router-dom";
 
-const Form = ({isLoggedIn, data, setData}) => {
+const Form = ({ isLoggedIn, data, setData }) => {
   const [page, setPage] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
+  const navigate = useNavigate();
+
   const formTitles = [
     "Which location are you exploring?",
     "Select your budget?",
     "Select your food preferences",
     "Select some music genres",
   ];
-
-
 
   const displayPage = () => {
     switch (page) {
@@ -27,8 +28,6 @@ const Form = ({isLoggedIn, data, setData}) => {
         return <FoodPage data={data} setData={setData} />;
       case 3:
         return <GenrePage data={data} setData={setData} />;
-      case 4:
-        return <DayOverview userData={data} isLoggedIn={isLoggedIn} />;
       default:
         return;
     }
@@ -85,7 +84,6 @@ const Form = ({isLoggedIn, data, setData}) => {
               onClick={() => {
                 if (page === 3 && allFieldsFull()) {
                   setShowPopup(true);
-      
                 } else if (page === 3 && !allFieldsFull()) {
                   setShowPopup(true);
                 } else {
@@ -107,7 +105,6 @@ const Form = ({isLoggedIn, data, setData}) => {
                     setShowPopup(false);
                     if (allFieldsFull()) {
                       setPage((currPage) => currPage + 1);
-              
                     }
                   }}
                   className="absolute top-2 right-2 text-gray-600 hover:text-gray-800 mb-4"
@@ -148,7 +145,7 @@ const Form = ({isLoggedIn, data, setData}) => {
                     onClick={() => {
                       setShowPopup(false);
                       if (allFieldsFull()) {
-                        window.location.href='/recommendations'
+                        navigate("/recommendations");
                       }
                     }}
                     className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
