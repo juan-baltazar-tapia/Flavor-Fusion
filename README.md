@@ -7,9 +7,9 @@ An web application for restaurant and music event reccomendations based on prefe
 
 ## Setup
 
-git clone the repository
+git clone the repository by copy and pasting the following code into your terminal in the desired location.
 ```js
-https://github.com/juan-baltazar-tapia/Flavor-Fusion.git
+git clone https://github.com/juan-baltazar-tapia/Flavor-Fusion.git
 ```
 ## install node modules, I used node version 20.11.1
 cd into the folder and run npm install
