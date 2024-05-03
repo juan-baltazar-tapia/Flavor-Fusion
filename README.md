@@ -12,7 +12,11 @@ git clone the repository by copy and pasting the following code into your termin
 git clone https://github.com/juan-baltazar-tapia/Flavor-Fusion.git
 ```
 ## install node modules, I used node version 20.11.1
-cd into the folder and run npm install
+cd into the folder 
+```js
+npm Flavor-Fusion
+```
+and run npm install
 ```js
 npm install
 ```
