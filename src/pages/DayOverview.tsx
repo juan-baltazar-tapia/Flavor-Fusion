@@ -115,7 +115,7 @@ const DayOverview = ({ userData, isLoggedIn, userId }) => {
         selectedRestaurants.push(arr[randomIndex]);
       }
     }
-    setRestaurants(selectedRestaurants)
+    setRestaurants(selectedRestaurants);
 
     return selectedRestaurants;
   };
