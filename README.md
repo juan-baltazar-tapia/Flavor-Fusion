@@ -17,7 +17,7 @@ cd into the folder and run npm install
 npm install
 ```
 
-# If you don't have nvm or node installed, heres a link
+If you don't have nvm or node installed, heres a link
 https://nodejs.org/en/download/package-manager/
 
 
@@ -26,20 +26,20 @@ https://nodejs.org/en/download/package-manager/
 2. https://developers.google.com/maps/documentation/javascript/get-api-key
 3. https://seatgeek.com/account/develop
 
-## create a .env in under the main folder and and use these exact names into the file
+## Create a .env in under the main folder and and use these exact names into the file
 ```js
-VITE_GOOGLE_API_KEY = 'insert api key'
-VITE_YELP_API_KEY = 'insert api key'
-VITE_SEAK_GEEK_API_KEY = 'insert api key'
+VITE_GOOGLE_API_KEY = 'insertApiKey'
+VITE_YELP_API_KEY = 'insertApiKey'
+VITE_SEAK_GEEK_API_KEY = 'insertApiKey'
 ```
 ## You will need a supabase account
 1. https://supabase.com/
 
-#Create a project, and click on SQL editor on the left hand side.
+Create a project, and click on SQL editor on the left hand side.
 
 <img width="210" alt="Screenshot 2024-05-02 at 11 29 43 PM" src="https://github.com/juan-baltazar-tapia/Flavor-Fusion/assets/73971599/2709840a-6d05-4a08-bcfd-a69b18a2f136">
 
-#Copy and paste the following querie
+Copy and paste the following querie, and click run on the bottom left hand side.
 ```js
 create table
   restaurants (
@@ -57,10 +57,13 @@ create table
 #Go into settings on the bottom left side
 
 <img width="205" alt="Screenshot 2024-05-02 at 11 38 48 PM" src="https://github.com/juan-baltazar-tapia/Flavor-Fusion/assets/73971599/de9c9bc3-08dd-4a2e-97ce-e0cd95b12518">
-# Under configuration, click on API
+
+
+Under configuration, click on API
 <img width="251" alt="Screenshot 2024-05-02 at 11 39 15 PM" src="https://github.com/juan-baltazar-tapia/Flavor-Fusion/assets/73971599/7307879a-8e74-4e04-b43d-4f05fd9f4e17">
 
-# Copy and paste this into the .env folder and paste your Project URL into VITE_SUPABASE_URL, and anon public Project Api Key into VITE_SUPABASE_KEY
+
+## Copy and paste this into the .env folder and paste your Project URL into VITE_SUPABASE_URL, and anon public Project Api Key into VITE_SUPABASE_KEY
 ```js
 VITE_SUPABASE_URL = 'insertProjecRurl'
 VITE_SUPABASE_KEY = 'insertAnonPublicKey'
