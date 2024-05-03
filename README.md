@@ -2,7 +2,7 @@
 
 An web application for restaurant and music event reccomendations based on preferences, budget, and location. Get a list of top rated, restaurants, and nearby music events, save them into your profile for future use! 
 
-* Work in Progress...
+* Work in Progress
 
 
 ## Setup
