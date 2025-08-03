@@ -14,7 +14,7 @@ git clone https://github.com/juan-baltazar-tapia/Flavor-Fusion.git
 ## install node modules, I used node version 20.11.1
 cd into the folder 
 ```js
-npm Flavor-Fusion
+cd Flavor-Fusion
 ```
 and run npm install
 ```js
